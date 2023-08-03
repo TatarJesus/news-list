@@ -4,7 +4,7 @@ const stateCurrentNewsSlice = createSlice({
   name: "currentNews",
   initialState: {
     data: {
-      id: 0,
+      id: -1,
       title: "",
       points: 0,
       user: "",
@@ -23,7 +23,7 @@ const stateCurrentNewsSlice = createSlice({
     },
     setDefault(state) {
       state.data = {
-        id: 0,
+        id: -1,
         title: "",
         points: 0,
         user: "",

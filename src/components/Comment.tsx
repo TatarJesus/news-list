@@ -2,21 +2,17 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import parse from "html-react-parser";
 
-interface ReplieProps {
-  level: number;
-}
+// interface ReplieProps {
+//   $level: number;
+// }
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const Replie = styled.div.attrs<ReplieProps>((props) => ({
-  type: "text",
-  onFocus: () => console.log("Focused"),
-  size: props.level * 40 + "px",
-}))<ReplieProps>`
-  margin: 10px 0px 10px ${({ size }) => size};
+const Replie = styled.div<{ $level: number }>`
+  margin: 10px 0px 10px ${props => props.$level * 35 + 'px'};
   width: 700px;
   padding: 10px;
   border-radius: 10px;
@@ -57,7 +53,7 @@ export const Comment = (props: OptionsElemComment) => {
 
   return (
     <Container>
-      <Replie level={props.level}>
+      <Replie $level={props.level}>
         <span style={{ color: "#6251ff", fontWeight: 600 }}>{props.user}</span>
         {parse(props.content)}
         {props.comments_count === 0 ? null : (

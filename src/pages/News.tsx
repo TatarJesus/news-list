@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { styled } from "styled-components";
@@ -85,7 +85,7 @@ export const News = () => {
         <h1>The news is not relevant or there is no such news</h1>
       </TitleNews>
     </Container>
-  ) : currentNews.id !== 0 ? (
+  ) : currentNews.id !== -1 ? (
     <Container>
       <Link to="/">
         <BackToNews />
