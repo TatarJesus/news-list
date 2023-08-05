@@ -1,40 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const defaultData = {
+  id: -1,
+  title: "",
+  points: 0,
+  user: "",
+  time: 0,
+  time_ago: "",
+  comments_count: 0,
+  type: "",
+  url: "",
+  domain: "",
+  comments: [],
+};
+
 const stateCurrentNewsSlice = createSlice({
   name: "currentNews",
   initialState: {
-    data: {
-      id: -1,
-      title: "",
-      points: 0,
-      user: "",
-      time: 0,
-      time_ago: "",
-      comments_count: 0,
-      type: "",
-      url: "",
-      domain: "",
-      comments: [],
-    },
+    data: defaultData,
   },
   reducers: {
     updateNews(state, action) {
       state.data = action.payload;
     },
     setDefault(state) {
-      state.data = {
-        id: -1,
-        title: "",
-        points: 0,
-        user: "",
-        time: 0,
-        time_ago: "",
-        comments_count: 0,
-        type: "",
-        url: "",
-        domain: "",
-        comments: [],
-      };
+      state.data = defaultData;
     },
   },
 });
