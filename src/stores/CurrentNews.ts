@@ -21,7 +21,10 @@ const stateCurrentNewsSlice = createSlice({
   },
   reducers: {
     updateNews(state, action) {
-      state.data = action.payload;
+      if (action.payload === 'stop') {
+        state.data = defaultData;
+        state.data.title = 'The news is not relevant or there is no such news';
+      } else state.data = action.payload;
     },
     setDefault(state) {
       state.data = defaultData;

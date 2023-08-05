@@ -30,11 +30,12 @@ export const News = () => {
     await axios
       .get(`https://api.hnpwa.com/v0/item/${params.id}.json`)
       .then(({ data }) => {
-        data !== null && dispatch(updateNews(data));
+        data !== null ? dispatch(updateNews(data)) : dispatch(updateNews('stop'));
       });
   };
 
   useEffect(() => {
+    console.log(currentNews);
     getComments();
     const timer = setInterval(() => {
       getComments();
@@ -45,16 +46,7 @@ export const News = () => {
     };
   }, []);
 
-  return currentNews.id === -1 ? (
-    <Container>
-      <Link to="/">
-        <BackToNews />
-      </Link>
-      <TitleNews>
-        <h1>The news is not relevant or there is no such news</h1>
-      </TitleNews>
-    </Container>
-  ) : currentNews.id !== -1 ? (
+  return (
     <Container>
       <Link to="/">
         <BackToNews />
@@ -62,32 +54,35 @@ export const News = () => {
       <TitleNews>
         <h1>{currentNews.title}</h1>
       </TitleNews>
-      <OtherInfo>
-        <span>
-          Link to news: <a href={currentNews.url}>{currentNews.url}</a>
-        </span>
-        <span>Author: {currentNews.user}</span>
-        <span>Date publish: {dateNews}</span>
-        <span>Comments: {currentNews.comments_count}</span>
-      </OtherInfo>
-      <ButtonUpdateComments onClick={getComments}>
-        Update comments
-      </ButtonUpdateComments>
-      <Comments>
-        {currentNews.comments.map((comment: OptionsElemComment) => (
-          <Comment
-            key={comment.id}
-            id={comment.id}
-            level={comment.level}
-            user={comment.user}
-            content={comment.content}
-            comments_count={comment.comments_count}
-            comments={comment.comments}
-          />
-        ))}
-      </Comments>
+      {currentNews.id !== -1 && (
+        <>
+          <OtherInfo>
+            <span>
+              Link to news: <a href={currentNews.url}>{currentNews.url}</a>
+            </span>
+            <span>Author: {currentNews.user}</span>
+            <span>Date publish: {dateNews}</span>
+            <span>Comments: {currentNews.comments_count}</span>
+          </OtherInfo>
+          <ButtonUpdateComments onClick={getComments}>
+            Update comments
+          </ButtonUpdateComments>
+          <Comments>
+            {currentNews.comments.map((comment: OptionsElemComment) => (
+              <Comment
+                key={comment.id}
+                id={comment.id}
+                level={comment.level}
+                user={comment.user}
+                content={comment.content}
+                comments_count={comment.comments_count}
+                comments={comment.comments}
+              />
+            ))}
+          </Comments>
+        </>
+      )}
+      {currentNews.title === '' && <Loader />}
     </Container>
-  ) : (
-    <Loader />
   );
 };
