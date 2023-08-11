@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-
 import { RootState } from "../stores/store";
 import { setDefault, updateNews } from "../stores/CurrentNews";
 import { Comment } from "../components/Comment";
@@ -17,6 +16,7 @@ import {
   ButtonUpdateComments,
   Comments,
 } from "../styles/stylePages/News";
+import { baseUrl } from "../consts";
 
 export const News = () => {
   const dispatch = useDispatch();
@@ -28,14 +28,15 @@ export const News = () => {
 
   const getComments = async () => {
     await axios
-      .get(`https://api.hnpwa.com/v0/item/${params.id}.json`)
+      .get(`${baseUrl}item/${params.id}.json`)
       .then(({ data }) => {
-        data !== null ? dispatch(updateNews(data)) : dispatch(updateNews('stop'));
+        data !== null
+          ? dispatch(updateNews(data))
+          : dispatch(updateNews("no data"));
       });
   };
 
   useEffect(() => {
-    console.log(currentNews);
     getComments();
     const timer = setInterval(() => {
       getComments();
@@ -69,20 +70,12 @@ export const News = () => {
           </ButtonUpdateComments>
           <Comments>
             {currentNews.comments.map((comment: OptionsElemComment) => (
-              <Comment
-                key={comment.id}
-                id={comment.id}
-                level={comment.level}
-                user={comment.user}
-                content={comment.content}
-                comments_count={comment.comments_count}
-                comments={comment.comments}
-              />
+              <Comment key={comment.id} {...comment} />
             ))}
           </Comments>
         </>
       )}
-      {currentNews.title === '' && <Loader />}
+      {currentNews.title === "" && <Loader />}
     </Container>
   );
 };

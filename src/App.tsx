@@ -1,11 +1,6 @@
-import { styled } from "styled-components";
 import { Header } from "./components/Header";
 import { AppRouter } from "./routes/AppRoutes";
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+import { Container } from "./styles/App";
 
 export const App = () => {
   return (

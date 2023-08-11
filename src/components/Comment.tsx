@@ -23,15 +23,7 @@ export const Comment = (props: OptionsElemComment) => {
       </Replie>
       {allReplies &&
         props.comments.map((comment: OptionsElemComment) => (
-          <Comment
-            key={comment.id}
-            id={comment.id}
-            level={comment.level}
-            user={comment.user}
-            content={comment.content}
-            comments_count={comment.comments_count}
-            comments={comment.comments}
-          />
+          <Comment key={comment.id} {...comment} />
         ))}
     </Container>
   );

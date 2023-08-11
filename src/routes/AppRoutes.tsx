@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import { publicRoutes } from "../routes/ListRoutes";
-
 import { ContainerRoutes } from "../components/ContainerRoutes";
 
 export const AppRouter = () => {
